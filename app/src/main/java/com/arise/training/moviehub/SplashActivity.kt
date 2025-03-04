@@ -1,5 +1,6 @@
 package com.arise.training.moviehub
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -16,5 +17,16 @@ class SplashActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        goToMain()
+    }
+
+    fun goToMain() {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.putExtra(EXTRA_NAME, "Hello Nay")
+        startActivity(intent)
+    }
+
+    companion object {
+        const val EXTRA_NAME = "EXTRA_NAME"
     }
 }
