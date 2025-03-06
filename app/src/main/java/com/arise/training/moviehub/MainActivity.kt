@@ -5,38 +5,41 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.arise.training.moviehub.DetailActivity.Companion.STATE_COUNT
 import com.arise.training.moviehub.SplashActivity.Companion.EXTRA_NAME
 import com.arise.training.moviehub.databinding.ActivityMainBinding
+import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-
+    private val viewModel: MainViewModel by viewModels()
     override fun onStart() {
         super.onStart()
-        Log.d("MainActivity", "onStart")
+        Timber.d("onStart")
     }
 
     override fun onResume() {
         super.onResume()
-        Log.d("MainActivity", "onResume")
+        Timber.d("onResume")
     }
 
     override fun onPause() {
         super.onPause()
-        Log.d("MainActivity", "onPause")
+        Timber.d("onPause")
     }
 
     override fun onStop() {
         super.onStop()
-        Log.d("MainActivity", "onStop")
+        Timber.d("onStop")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.d("MainActivity", "onDestroy")
+        Timber.d("onDestroy")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,10 +56,26 @@ class MainActivity : AppCompatActivity() {
         val textView = binding.mainTv
         textView.text = name
 
-        val nextBtn = binding.mainBtn
-        nextBtn.setOnClickListener {
-            goToDetailActivity()
+        if (savedInstanceState != null) {
+            Timber.d("count: ${savedInstanceState.getInt(STATE_COUNT)}")
+            viewModel.number.value = savedInstanceState.getInt(STATE_COUNT)
         }
+
+        val nextBtn = binding.mainBtn
+
+        viewModel.number.observe(this) {
+            textView.text = it.toString()
+        }
+
+        nextBtn.setOnClickListener {
+            viewModel.counter()
+//            goToDetailActivity()
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(STATE_COUNT, viewModel.number.value ?: 0)
     }
 
     fun goToDetailActivity() {

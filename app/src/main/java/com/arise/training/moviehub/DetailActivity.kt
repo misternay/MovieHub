@@ -9,33 +9,34 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.arise.training.moviehub.databinding.ActivityDetailBinding
+import timber.log.Timber
 
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
     var count = 0
     override fun onStart() {
         super.onStart()
-        Log.d("DetailActivity", "onStart")
+        Timber.d("onStart")
     }
 
     override fun onResume() {
         super.onResume()
-        Log.d("DetailActivity", "onResume")
+        Timber.d("onResume")
     }
 
     override fun onPause() {
         super.onPause()
-        Log.d("DetailActivity", "onPause")
+        Timber.d("onPause")
     }
 
     override fun onStop() {
         super.onStop()
-        Log.d("DetailActivity", "onStop")
+        Timber.d("onStop")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.d("DetailActivity", "onDestroy")
+        Timber.d("onDestroy")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,14 +51,14 @@ class DetailActivity : AppCompatActivity() {
         }
 
         if (savedInstanceState != null) {
-            Log.d("DetailActivity", "count: ${savedInstanceState.getInt(STATE_COUNT)}")
+            Timber.d("count: ${savedInstanceState.getInt(STATE_COUNT)}")
             count = savedInstanceState.getInt(STATE_COUNT)
         }
 
         val backBtn = binding.detailBtn
         backBtn.setOnClickListener {
             count += 1
-            Log.d("DetailActivity", "count: $count")
+            Timber.d("count: $count")
         }
     }
 
